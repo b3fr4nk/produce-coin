@@ -41,10 +41,10 @@
  * https://trufflesuite.com/docs/truffle/getting-started/using-the-truffle-dashboard/
  */
 
-// require('dotenv').config();
-// const { MNEMONIC, PROJECT_ID } = process.env;
-
-// const HDWalletProvider = require('@truffle/hdwallet-provider');
+require("dotenv").config();
+const { MNEMONIC, PROJECT_ID } = process.env;
+var DefaultBuilder = require("truffle-default-builder");
+const HDWalletProvider = require("@truffle/hdwallet-provider");
 
 module.exports = {
   /**
@@ -100,6 +100,11 @@ module.exports = {
     //   production: true    // Treats this network as if it was a public net. (default: false)
     // }
   },
+
+  build: new DefaultBuilder({
+    "index.html": "index.html",
+    "app.js": ["javascript/index.js"],
+  }),
 
   // Set default mocha options here, use special reporters, etc.
   mocha: {
