@@ -1,6 +1,6 @@
 import { useState } from "react";
 import useEth from "../../contexts/EthContext/useEth";
-import { latestToken } from "./latestToken";
+import LatestToken from "./LatestToken";
 
 function ContractBtns() {
   const {
@@ -10,7 +10,7 @@ function ContractBtns() {
   const [farmDate, setFarmDate] = useState("");
   const [processingPlant, setProcessingPlant] = useState("");
   const [processingDate, setProcessingDate] = useState("");
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState("Waiting for first Token");
 
   const awardItem = async (e) => {
     const address = accounts[0];
@@ -24,24 +24,8 @@ function ContractBtns() {
       .awardItem(address, JSON.stringify(metadata))
       .send({ from: accounts[0] });
     console.log(testToken);
+    setToken(testToken.transactionHash);
   };
-
-  // const read = async () => {
-  //   const value = await contract.methods.read().call({ from: accounts[0] });
-  //   setValue(value);
-  // };
-
-  // const write = async e => {
-  //   if (e.target.tagName === "INPUT") {
-  //     return;
-  //   }
-  //   if (inputValue === "") {
-  //     alert("Please enter a value to write.");
-  //     return;
-  //   }
-  //   const newValue = parseInt(inputValue);
-  //   await contract.methods.write(newValue).send({ from: accounts[0] });
-  // };
 
   return (
     <div>
@@ -83,6 +67,7 @@ function ContractBtns() {
       <button onClick={awardItem} className="input-btn">
         Submit
       </button>
+      <LatestToken token={token} />
     </div>
   );
 }
